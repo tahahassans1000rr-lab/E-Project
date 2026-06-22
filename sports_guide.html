@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SportsInfo — Complete Sports Guide</title>
+<meta name="description" content="Comprehensive educational guide to cricket, football, basketball, tennis, badminton, and hockey — rules, history, and how to play.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ── TOKENS ─────────────────────────────────── */
+:root {
+  --bg:        #040810;
+  --bg2:       #07111f;
+  --glass:     rgba(255,255,255,0.04);
+  --gborder:   rgba(255,255,255,0.08);
+  --neon:      #00f5d4;
+  --gold:      #f7b731;
+  --red:       #ff4d6d;
+  --muted:     #7a8a9e;
+  --text:      #e8eaf0;
+  --card:      rgba(10,20,40,0.7);
+  --disp:      'Bebas Neue', sans-serif;
+  --body:      'Barlow', sans-serif;
+  --cond:      'Barlow Condensed', sans-serif;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:var(--body); font-weight:300; overflow-x:hidden; }
+
+/* ── NAVBAR ─────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  background:rgba(4,8,16,0.88); backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--gborder);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 2rem; height:64px;
+}
+.brand {
+  font-family:var(--disp); font-size:1.6rem; letter-spacing:3px;
+  color:var(--neon); text-shadow:0 0 18px rgba(0,245,212,.4); text-decoration:none;
+}
+.brand span { color:var(--gold); }
+.nav-links { display:flex; gap:0; }
+.nav-links a {
+  font-family:var(--cond); font-size:.78rem; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--muted); text-decoration:none;
+  padding:.65rem .7rem; border-radius:4px; transition:color .2s, background .2s; white-space:nowrap;
+}
+.nav-links a:hover { color:var(--neon); background:rgba(0,245,212,.06); }
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:.3rem; }
+.hamburger span { display:block; width:24px; height:2px; background:var(--neon); border-radius:2px; transition:all .3s; }
+.mobile-nav {
+  display:none; position:fixed; top:64px; left:0; right:0; z-index:899;
+  background:rgba(4,8,16,.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--gborder); padding:1rem; flex-direction:column; gap:.25rem;
+}
+.mobile-nav.open { display:flex; }
+.mobile-nav a { font-family:var(--cond); font-size:.9rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--muted); text-decoration:none; padding:.75rem 1rem; border-radius:6px; }
+.mobile-nav a:hover { color:var(--neon); background:rgba(0,245,212,.06); }
+
+/* ── HERO ───────────────────────────────────── */
+.hero {
+  position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  overflow:hidden; padding-top:64px; text-align:center;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 25%, rgba(0,245,212,.13) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 40% at 80% 70%, rgba(247,183,49,.08) 0%, transparent 65%),
+    linear-gradient(140deg, #040810 0%, #07111f 55%, #040c1a 100%);
+}
+.hero-grid {
+  position:absolute; inset:0; z-index:1;
+  background-image:
+    linear-gradient(rgba(0,245,212,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,212,.045) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse at center, black 25%, transparent 78%);
+}
+.hero-inner { position:relative; z-index:3; padding:2rem 1rem; }
+.eyebrow { font-family:var(--cond); font-size:.8rem; letter-spacing:6px; text-transform:uppercase; color:var(--neon); opacity:.8; margin-bottom:1.5rem; }
+.hero-title {
+  font-family:var(--disp); font-size:clamp(4.5rem,13vw,11rem); line-height:.88;
+  letter-spacing:4px; text-transform:uppercase;
+  background:linear-gradient(135deg,#fff 0%,var(--neon) 45%,var(--gold) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:1.5rem;
+}
+.hero-sub { font-size:1.1rem; color:var(--muted); max-width:560px; margin:0 auto 2.5rem; line-height:1.75; font-weight:300; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-bottom:2.8rem; }
+.hero-pill {
+  font-family:var(--cond); font-size:.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  padding:.4rem 1rem; border-radius:20px; border:1px solid var(--gborder);
+  background:var(--glass); color:var(--muted); cursor:pointer; transition:all .25s; text-decoration:none;
+}
+.hero-pill:hover { border-color:var(--neon); color:var(--neon); background:rgba(0,245,212,.07); }
+.scroll-cue { display:flex; flex-direction:column; align-items:center; gap:.5rem; color:var(--muted); font-family:var(--cond); font-size:.7rem; letter-spacing:3px; text-transform:uppercase; }
+.scroll-cue i { animation:bounce 2s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(6px);} }
+
+/* ── SECTION SHARED ─────────────────────────── */
+section { position:relative; z-index:2; padding:5rem 0; }
+.container { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+.sec-label { font-family:var(--cond); font-size:.72rem; letter-spacing:5px; text-transform:uppercase; color:var(--neon); display:block; margin-bottom:.7rem; }
+.sec-title { font-family:var(--disp); font-size:clamp(2.2rem,5vw,3.8rem); letter-spacing:3px; line-height:1; margin-bottom:1rem; }
+.sec-sub { color:var(--muted); max-width:560px; line-height:1.75; font-size:.98rem; }
+.divider { width:56px; height:2px; background:linear-gradient(90deg,var(--neon),transparent); margin:1.4rem 0; }
+.divider.center { margin:1.4rem auto; }
+.text-center { text-align:center; }
+
+/* ── OVERVIEW BAND ──────────────────────────── */
+.overview {
+  background:linear-gradient(135deg,rgba(0,245,212,.045),rgba(247,183,49,.03));
+  border-top:1px solid var(--gborder); border-bottom:1px solid var(--gborder);
+}
+.overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.5rem; margin-top:3rem; }
+.ov-card {
+  background:var(--card); border:1px solid var(--gborder); border-radius:12px; padding:1.6rem;
+  backdrop-filter:blur(10px); transition:all .35s;
+}
+.ov-card:hover { border-color:var(--neon); transform:translateY(-5px); box-shadow:0 15px 40px rgba(0,245,212,.1); }
+.ov-icon { font-size:1.8rem; margin-bottom:1rem; }
+.ov-card h4 { font-family:var(--cond); font-size:1.1rem; letter-spacing:2px; text-transform:uppercase; color:var(--neon); margin-bottom:.6rem; }
+.ov-card p { font-size:.88rem; color:var(--muted); line-height:1.7; }
+
+/* ── SPORT NAV TABS ─────────────────────────── */
+.sport-tabs-wrap { border-bottom:1px solid var(--gborder); padding-bottom:0; margin-bottom:0; position:sticky; top:64px; z-index:80; background:rgba(4,8,16,.94); backdrop-filter:blur(20px); }
+.sport-tabs { display:flex; gap:0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.sport-tabs::-webkit-scrollbar { display:none; }
+.s-tab {
+  font-family:var(--cond); font-size:.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  padding:1rem 1.3rem; color:var(--muted); cursor:pointer; border:none; background:none;
+  border-bottom:2px solid transparent; white-space:nowrap; transition:all .25s; flex-shrink:0;
+}
+.s-tab:hover { color:var(--text); }
+.s-tab.active { color:var(--neon); border-bottom-color:var(--neon); }
+
+/* ── SPORT SECTIONS ─────────────────────────── */
+.sport-section { display:none; padding:4rem 0 6rem; }
+.sport-section.active { display:block; }
+
+.sport-hero-band {
+  border-radius:16px; padding:3.5rem; margin-bottom:3rem; position:relative; overflow:hidden;
+}
+.sport-hero-band::before {
+  content:''; position:absolute; inset:0; border-radius:16px; opacity:.12; z-index:0;
+}
+.sport-hero-band .shb-inner { position:relative; z-index:1; }
+.sport-emoji { font-size:5rem; margin-bottom:1rem; display:block; line-height:1; }
+.sport-name { font-family:var(--disp); font-size:clamp(3rem,8vw,6.5rem); letter-spacing:4px; line-height:.9; margin-bottom:.6rem; }
+.sport-tagline { font-size:1.1rem; color:var(--muted); font-style:italic; margin-bottom:1.5rem; }
+.sport-intro { font-size:1rem; color:var(--text); line-height:1.8; max-width:780px; }
+
+/* accent gradients per sport */
+.sb-cricket  { background:linear-gradient(135deg,rgba(22,163,74,.15),rgba(0,245,212,.06)); border:1px solid rgba(22,163,74,.25); }
+.sb-football { background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(0,245,212,.06)); border:1px solid rgba(59,130,246,.25); }
+.sb-basketball { background:linear-gradient(135deg,rgba(249,115,22,.18),rgba(247,183,49,.06)); border:1px solid rgba(249,115,22,.3); }
+.sb-tennis   { background:linear-gradient(135deg,rgba(247,183,49,.15),rgba(253,224,71,.06)); border:1px solid rgba(247,183,49,.3); }
+.sb-badminton{ background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(139,92,246,.06)); border:1px solid rgba(236,72,153,.25); }
+.sb-hockey   { background:linear-gradient(135deg,rgba(14,165,233,.15),rgba(0,245,212,.06)); border:1px solid rgba(14,165,233,.25); }
+
+/* info grid */
+.info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-bottom:2.5rem; }
+.info-card {
+  background:var(--card); border:1px solid var(--gborder); border-radius:12px; padding:1.5rem;
+  backdrop-filter:blur(10px);
+}
+.info-card h5 { font-family:var(--cond); font-size:.85rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--neon); margin-bottom:1.1rem; }
+.info-row { display:flex; justify-content:space-between; align-items:flex-start; padding:.55rem 0; border-bottom:1px solid var(--gborder); font-size:.87rem; gap:1rem; }
+.info-row:last-child { border-bottom:none; }
+.info-row .lbl { color:var(--muted); flex-shrink:0; }
+.info-row .val { font-family:var(--cond); font-weight:600; letter-spacing:.5px; text-align:right; }
+
+/* rules card */
+.rules-card {
+  background:var(--card); border:1px solid var(--gborder); border-left:3px solid var(--neon);
+  border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;
+}
+.rules-card h5 { font-family:var(--cond); font-size:.85rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--neon); margin-bottom:1.2rem; }
+.rules-card ul { padding-left:1.2rem; }
+.rules-card ul li { font-size:.9rem; color:var(--muted); line-height:1.8; margin-bottom:.3rem; }
+.rules-card ul li strong { color:var(--text); font-weight:600; }
+
+/* terminology grid */
+.term-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-top:1.5rem; }
+.term-item {
+  background:rgba(0,245,212,.05); border:1px solid rgba(0,245,212,.12); border-radius:8px;
+  padding:1rem 1.2rem;
+}
+.term-item .term { font-family:var(--cond); font-size:.85rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--neon); margin-bottom:.3rem; }
+.term-item .def { font-size:.82rem; color:var(--muted); line-height:1.6; }
+
+/* equipment list */
+.equip-list { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1rem; }
+.equip-tag {
+  background:rgba(247,183,49,.08); border:1px solid rgba(247,183,49,.2); border-radius:6px;
+  padding:.4rem .9rem; font-family:var(--cond); font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold);
+}
+
+/* history banner */
+.history-band {
+  background:var(--card); border:1px solid var(--gborder); border-radius:12px;
+  padding:2rem; margin-top:1.5rem;
+}
+.history-band h5 { font-family:var(--cond); font-size:.85rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+.fact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
+.fact-item { display:flex; align-items:flex-start; gap:.8rem; }
+.fact-bullet { width:6px; height:6px; border-radius:50%; background:var(--neon); flex-shrink:0; margin-top:.55rem; }
+.fact-item p { font-size:.87rem; color:var(--muted); line-height:1.65; }
+
+/* section sub-heading */
+.sub-heading { font-family:var(--disp); font-size:1.8rem; letter-spacing:2px; margin:2.5rem 0 1rem; }
+.sub-heading span { color:var(--neon); }
+
+/* ── QUICK COMPARE ──────────────────────────── */
+.compare { background:linear-gradient(135deg,rgba(0,245,212,.04),rgba(247,183,49,.02)); border-top:1px solid var(--gborder); }
+.compare-table { width:100%; border-collapse:separate; border-spacing:0; margin-top:2rem; font-size:.88rem; }
+.compare-table th {
+  font-family:var(--cond); font-size:.72rem; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--neon); padding:.9rem 1rem; border-bottom:2px solid rgba(0,245,212,.2); text-align:left; background:transparent;
+}
+.compare-table td { padding:.9rem 1rem; border-bottom:1px solid var(--gborder); color:var(--muted); vertical-align:top; }
+.compare-table tr:last-child td { border-bottom:none; }
+.compare-table tr:hover td { background:rgba(255,255,255,.02); color:var(--text); }
+.compare-table td:first-child { font-family:var(--cond); font-weight:700; letter-spacing:1px; color:var(--text); }
+.tbl-wrap { overflow-x:auto; border:1px solid var(--gborder); border-radius:12px; }
+
+/* ── FOOTER ─────────────────────────────────── */
+footer { border-top:1px solid var(--gborder); padding:3rem 0 2rem; }
+.foot-brand { font-family:var(--disp); font-size:2rem; letter-spacing:3px; color:var(--neon); margin-bottom:.5rem; }
+.foot-brand span { color:var(--gold); }
+.foot-copy { font-family:var(--cond); font-size:.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--gborder); }
+.foot-links { display:flex; flex-direction:column; gap:.4rem; }
+.foot-links a { font-size:.85rem; color:var(--muted); text-decoration:none; transition:color .2s; cursor:pointer; }
+.foot-links a:hover { color:var(--neon); }
+.foot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; }
+.foot-col h6 { font-family:var(--cond); font-size:.72rem; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:1rem; }
+
+/* ── BACK-TO-TOP ────────────────────────────── */
+#btt {
+  position:fixed; bottom:2rem; right:2rem; z-index:500;
+  width:44px; height:44px; border-radius:50%; border:1px solid rgba(0,245,212,.3);
+  background:rgba(4,8,16,.8); backdrop-filter:blur(10px); color:var(--neon);
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  opacity:0; transition:all .3s; pointer-events:none; font-size:.85rem;
+}
+#btt.show { opacity:1; pointer-events:auto; }
+#btt:hover { background:rgba(0,245,212,.1); border-color:var(--neon); }
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media(max-width:768px){
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+  .sport-hero-band { padding:2rem 1.5rem; }
+  .compare-table th, .compare-table td { padding:.7rem .75rem; font-size:.8rem; }
+}
+@media(max-width:500px){
+  .hero-title { letter-spacing:2px; }
+  .term-grid { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══════════════════════════════════════════ -->
+<nav>
+  <a href="#" class="brand">SPORTS<span>INFO</span></a>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#cricket">Cricket</a>
+    <a href="#football">Football</a>
+    <a href="#basketball">Basketball</a>
+    <a href="#tennis">Tennis</a>
+    <a href="#badminton">Badminton</a>
+    <a href="#hockey">Hockey</a>
+    <a href="#compare">Compare</a>
+  </div>
+  <button class="hamburger" id="hbg" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mob-nav">
+  <a href="#overview" onclick="closeMob()">Overview</a>
+  <a href="#cricket" onclick="closeMob()">Cricket</a>
+  <a href="#football" onclick="closeMob()">Football</a>
+  <a href="#basketball" onclick="closeMob()">Basketball</a>
+  <a href="#tennis" onclick="closeMob()">Tennis</a>
+  <a href="#badminton" onclick="closeMob()">Badminton</a>
+  <a href="#hockey" onclick="closeMob()">Hockey</a>
+  <a href="#compare" onclick="closeMob()">Compare</a>
+</div>
+
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Infocom · Educational Sports Guide</p>
+    <h1 class="hero-title">THE WORLD<br>OF SPORT</h1>
+    <p class="hero-sub">A comprehensive educational resource covering six major sports — their rules, history, equipment, positions, and everything you need to understand the game.</p>
+    <div class="hero-pills">
+      <a class="hero-pill" href="#cricket">🏏 Cricket</a>
+      <a class="hero-pill" href="#football">⚽ Football</a>
+      <a class="hero-pill" href="#basketball">🏀 Basketball</a>
+      <a class="hero-pill" href="#tennis">🎾 Tennis</a>
+      <a class="hero-pill" href="#badminton">🏸 Badminton</a>
+      <a class="hero-pill" href="#hockey">🏑 Hockey</a>
+    </div>
+    <div class="scroll-cue">
+      <span>Scroll to explore</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OVERVIEW ══════════════════════════════════════════ -->
+<section class="overview" id="overview">
+  <div class="container">
+    <div class="text-center">
+      <span class="sec-label">What Are Sports?</span>
+      <h2 class="sec-title">THE IMPORTANCE OF SPORT</h2>
+      <div class="divider center"></div>
+      <p class="sec-sub" style="margin:0 auto">Sports are structured physical activities governed by rules and played for competition, recreation, or entertainment. Across all cultures and centuries, sport has served as a universal language — building teamwork, discipline, and community while promoting health and human achievement.</p>
+    </div>
+    <div class="overview-grid">
+      <div class="ov-card">
+        <div class="ov-icon">🏃</div>
+        <h4>Physical Health</h4>
+        <p>Regular participation in sports improves cardiovascular fitness, builds muscle strength, develops coordination, and reduces the risk of chronic diseases.</p>
+      </div>
+      <div class="ov-card">
+        <div class="ov-icon">🧠</div>
+        <h4>Mental Well-being</h4>
+        <p>Sports reduce stress and anxiety, boost confidence, sharpen focus and decision-making, and teach resilience through competition and setbacks.</p>
+      </div>
+      <div class="ov-card">
+        <div class="ov-icon">🤝</div>
+        <h4>Team & Community</h4>
+        <p>Team sports cultivate communication, trust, and shared purpose. Even individual sports unite communities around athletes and shared national pride.</p>
+      </div>
+      <div class="ov-card">
+        <div class="ov-icon">🌍</div>
+        <h4>Global Connection</h4>
+        <p>Events like the FIFA World Cup and Olympics draw billions of viewers worldwide, making sport one of the most powerful forces for cultural exchange.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPORT TABS ════════════════════════════════════════ -->
+<div class="sport-tabs-wrap">
+  <div class="container">
+    <div class="sport-tabs" role="tablist">
+      <button class="s-tab active" onclick="showSport('cricket')" role="tab">🏏 Cricket</button>
+      <button class="s-tab" onclick="showSport('football')" role="tab">⚽ Football</button>
+      <button class="s-tab" onclick="showSport('basketball')" role="tab">🏀 Basketball</button>
+      <button class="s-tab" onclick="showSport('tennis')" role="tab">🎾 Tennis</button>
+      <button class="s-tab" onclick="showSport('badminton')" role="tab">🏸 Badminton</button>
+      <button class="s-tab" onclick="showSport('hockey')" role="tab">🏑 Hockey</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CRICKET ═══════════════════════════════════════════ -->
+<div class="sport-section active" id="cricket">
+  <div class="container">
+
+    <div class="sport-hero-band sb-cricket">
+      <div class="shb-inner">
+        <span class="sport-emoji">🏏</span>
+        <h2 class="sport-name">CRICKET</h2>
+        <p class="sport-tagline">"A game that takes five days to play and still ends in a draw." — famously misattributed, endlessly accurate.</p>
+        <p class="sport-intro">Cricket is a bat-and-ball team sport played between two teams of eleven players on a circular grass field. Originating in England in the 16th century, cricket is now the world's second most popular sport by fan base, with particular strongholds in South Asia, the Caribbean, Australia, and the British Isles.</p>
+      </div>
+    </div>
+
+    <!-- Quick Facts -->
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players per side</span><span class="val">11</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">ICC</span></div>
+        <div class="info-row"><span class="lbl">Test match duration</span><span class="val">Up to 5 days</span></div>
+        <div class="info-row"><span class="lbl">ODI duration</span><span class="val">~8 hours</span></div>
+        <div class="info-row"><span class="lbl">T20 duration</span><span class="val">~3 hours</span></div>
+        <div class="info-row"><span class="lbl">Playing surface</span><span class="val">Grass oval + pitch</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring System</h5>
+        <div class="info-row"><span class="lbl">Six (boundary over rope)</span><span class="val">6 runs</span></div>
+        <div class="info-row"><span class="lbl">Four (boundary on ground)</span><span class="val">4 runs</span></div>
+        <div class="info-row"><span class="lbl">Running between wickets</span><span class="val">1–3 runs</span></div>
+        <div class="info-row"><span class="lbl">Wide / No-ball</span><span class="val">1 extra + re-bowl</span></div>
+        <div class="info-row"><span class="lbl">Leg bye / Bye</span><span class="val">1 run each</span></div>
+        <div class="info-row"><span class="lbl">Highest Test innings</span><span class="val">952/6 (Sri Lanka)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Positions & Roles</h5>
+        <div class="info-row"><span class="lbl">Batters</span><span class="val">1–11 in order</span></div>
+        <div class="info-row"><span class="lbl">Wicketkeeper</span><span class="val">Behind stumps</span></div>
+        <div class="info-row"><span class="lbl">Fast bowler</span><span class="val">90–100+ mph</span></div>
+        <div class="info-row"><span class="lbl">Spin bowler</span><span class="val">Slow, turn & flight</span></div>
+        <div class="info-row"><span class="lbl">All-rounder</span><span class="val">Bats + bowls</span></div>
+        <div class="info-row"><span class="lbl">Fielding captain</span><span class="val">Sets field positions</span></div>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules</h5>
+      <ul>
+        <li><strong>Objective:</strong> Score more runs than the opposing team across one or two innings.</li>
+        <li><strong>Batting:</strong> Two batters occupy the crease at each end of the 22-yard pitch. They score by hitting the ball and running between wickets or clearing the boundary.</li>
+        <li><strong>Bowling:</strong> Bowlers deliver 6 balls per over from one end of the pitch. Each ball must bounce on the pitch and aim to dismiss the batter.</li>
+        <li><strong>Dismissals:</strong> Batters are out via: bowled (ball hits stumps), caught (fielder catches ball before bouncing), LBW (ball hits pad in front of wicket on line to stumps), run-out, stumped, hit wicket, timed out, obstructing the field, or handling the ball.</li>
+        <li><strong>Innings structure:</strong> In Tests, each team bats twice. In ODIs, each team receives 50 overs. In T20s, each team receives 20 overs.</li>
+        <li><strong>DRS (Decision Review System):</strong> Teams may challenge on-field umpire decisions using video technology, ball-tracking, and UltraEdge.</li>
+        <li><strong>Powerplay:</strong> In limited-overs cricket, fielding restrictions apply in designated powerplay overs, encouraging more attacking batting.</li>
+        <li><strong>Follow-on:</strong> In Tests, a team leading by 200+ runs may require the opposition to bat again immediately.</li>
+      </ul>
+    </div>
+
+    <!-- Equipment -->
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Cricket bat</span>
+      <span class="equip-tag">Cricket ball (red/white/pink)</span>
+      <span class="equip-tag">Batting gloves</span>
+      <span class="equip-tag">Batting pads (leg guards)</span>
+      <span class="equip-tag">Helmet with grille</span>
+      <span class="equip-tag">Box (abdominal guard)</span>
+      <span class="equip-tag">Wickets (3 stumps + 2 bails)</span>
+      <span class="equip-tag">Wicketkeeper gloves</span>
+      <span class="equip-tag">Wicketkeeper pads</span>
+      <span class="equip-tag">Cricket whites / coloured kit</span>
+      <span class="equip-tag">Spiked cricket shoes</span>
+      <span class="equip-tag">Thigh guard</span>
+    </div>
+
+    <!-- Terminology -->
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Over</div><div class="def">A set of 6 legal deliveries bowled from one end.</div></div>
+      <div class="term-item"><div class="term">Duck</div><div class="def">A batter dismissed for zero runs.</div></div>
+      <div class="term-item"><div class="term">Maiden</div><div class="def">An over in which no runs are scored off the bat.</div></div>
+      <div class="term-item"><div class="term">Hat-trick</div><div class="def">Three wickets taken on three consecutive deliveries.</div></div>
+      <div class="term-item"><div class="term">Century</div><div class="def">A score of 100 or more runs by a single batter.</div></div>
+      <div class="term-item"><div class="term">LBW</div><div class="def">Leg Before Wicket — ball hits pad instead of bat, on stumps line.</div></div>
+      <div class="term-item"><div class="term">Yorker</div><div class="def">A delivery pitched at the batter's feet near the crease.</div></div>
+      <div class="term-item"><div class="term">Googly</div><div class="def">A wrist-spin delivery that turns the opposite direction.</div></div>
+    </div>
+
+    <!-- History -->
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>Cricket was first recorded in England in 1598 and became a popular sport in the 17th century.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The first international cricket match was played between the USA and Canada in 1844 — the oldest international sporting fixture in history.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The first Test match was played between England and Australia in Melbourne in 1877 — Australia won by 45 runs.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The Cricket World Cup has been held since 1975. West Indies (1975, 1979), India (1983, 2011), and Australia (5 times) are among the most decorated nations.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Sachin Tendulkar holds the record for most Test runs (15,921) and most international centuries (100).</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The IPL (Indian Premier League), launched in 2008, is one of the world's most lucrative sports leagues, valued at over $10 billion.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ FOOTBALL ══════════════════════════════════════════ -->
+<div class="sport-section" id="football">
+  <div class="container">
+
+    <div class="sport-hero-band sb-football">
+      <div class="shb-inner">
+        <span class="sport-emoji">⚽</span>
+        <h2 class="sport-name">FOOTBALL</h2>
+        <p class="sport-tagline">The beautiful game — played by 265 million people in over 200 countries.</p>
+        <p class="sport-intro">Association Football (known as soccer in North America) is the world's most popular sport. Two teams of eleven players compete to score by getting the ball into the opposing goal, using any part of the body except the arms and hands (except for the goalkeeper).</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players per side</span><span class="val">11 (+ 5 subs)</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">FIFA</span></div>
+        <div class="info-row"><span class="lbl">Match duration</span><span class="val">90 min (2×45)</span></div>
+        <div class="info-row"><span class="lbl">Ball circumference</span><span class="val">68–70 cm</span></div>
+        <div class="info-row"><span class="lbl">Pitch dimensions</span><span class="val">90–120 m × 45–90 m</span></div>
+        <div class="info-row"><span class="lbl">Goal dimensions</span><span class="val">7.32 m × 2.44 m</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring & Winning</h5>
+        <div class="info-row"><span class="lbl">Goal</span><span class="val">1 point</span></div>
+        <div class="info-row"><span class="lbl">Own goal</span><span class="val">1 point (for opponents)</span></div>
+        <div class="info-row"><span class="lbl">Extra time</span><span class="val">2 × 15 min</span></div>
+        <div class="info-row"><span class="lbl">Penalty shootout</span><span class="val">5 kicks each</span></div>
+        <div class="info-row"><span class="lbl">Most goals in a game</span><span class="val">Australia 31–0 AS</span></div>
+        <div class="info-row"><span class="lbl">World Cup wins leader</span><span class="val">Brazil (5 titles)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Key Positions</h5>
+        <div class="info-row"><span class="lbl">Goalkeeper (GK)</span><span class="val">Defends the goal</span></div>
+        <div class="info-row"><span class="lbl">Defenders (CB, LB, RB)</span><span class="val">Prevent opposing attacks</span></div>
+        <div class="info-row"><span class="lbl">Midfielders (CM, DM, AM)</span><span class="val">Link play, control tempo</span></div>
+        <div class="info-row"><span class="lbl">Wingers (LW, RW)</span><span class="val">Wide attackers</span></div>
+        <div class="info-row"><span class="lbl">Striker / Centre-forward</span><span class="val">Primary goalscorer</span></div>
+        <div class="info-row"><span class="lbl">Sweeper / Libero</span><span class="val">Defensive cover role</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules (Laws of the Game — IFAB)</h5>
+      <ul>
+        <li><strong>17 Laws:</strong> Football is governed by 17 Laws set by the International Football Association Board (IFAB).</li>
+        <li><strong>Offside:</strong> An attacker is offside if they are nearer to the opponent's goal line than both the ball and the second-to-last defender when the ball is played to them.</li>
+        <li><strong>Yellow card:</strong> A caution given for dangerous play, dissent, time-wasting, or persistent infringement. Two yellows = red.</li>
+        <li><strong>Red card:</strong> Immediate ejection from the match. The team plays with 10 players for the remainder.</li>
+        <li><strong>Penalty kick:</strong> Awarded when a foul occurs inside the penalty area. One-on-one from 12 yards (11m) against the goalkeeper.</li>
+        <li><strong>Free kicks:</strong> Direct (can score straight) or indirect (must touch another player before scoring).</li>
+        <li><strong>Corner kick:</strong> Awarded to the attacking team when the ball goes out of play over the goal line off a defender.</li>
+        <li><strong>VAR (Video Assistant Referee):</strong> Technology used to review goals, penalties, red cards, and mistaken identity.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Football (size 5 for adults)</span>
+      <span class="equip-tag">Football boots / cleats</span>
+      <span class="equip-tag">Shin guards</span>
+      <span class="equip-tag">Goalkeeping gloves</span>
+      <span class="equip-tag">Jersey / shorts / socks</span>
+      <span class="equip-tag">Goalkeeper jersey (different colour)</span>
+      <span class="equip-tag">Corner flags</span>
+      <span class="equip-tag">Goalposts with nets</span>
+    </div>
+
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Nutmeg</div><div class="def">Passing the ball between an opponent's legs.</div></div>
+      <div class="term-item"><div class="term">Clean Sheet</div><div class="def">When a goalkeeper concedes zero goals in a match.</div></div>
+      <div class="term-item"><div class="term">Hat-trick</div><div class="def">Three goals scored by the same player in one match.</div></div>
+      <div class="term-item"><div class="term">Brace</div><div class="def">Two goals scored by the same player in one match.</div></div>
+      <div class="term-item"><div class="term">Through ball</div><div class="def">A pass played through the defensive line into space.</div></div>
+      <div class="term-item"><div class="term">Pressing</div><div class="def">Aggressively closing down opponents to win back possession.</div></div>
+      <div class="term-item"><div class="term">Tiki-taka</div><div class="def">A style based on short passes, movement, and possession.</div></div>
+      <div class="term-item"><div class="term">Sweeper-keeper</div><div class="def">A GK who acts as an outfield player to sweep up through balls.</div></div>
+    </div>
+
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>The Football Association was founded in England in 1863, standardising the rules of the game for the first time.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The FIFA World Cup, first held in 1930 (Uruguay), is the most-watched sporting event on Earth, with the 2022 Qatar final drawing over 1.5 billion viewers.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Pelé (Brazil), Messi (Argentina), and Ronaldo (Portugal) are widely regarded as the three greatest players of all time.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The UEFA Champions League, contested by Europe's top club sides, is the most prestigious club competition in the world.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The fastest goal in professional football history was scored by Nawaf Al-Abed after 2 seconds in a Saudi Premier League match in 2009.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Over 265 million people actively play football, making it the world's most played sport.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ BASKETBALL ════════════════════════════════════════ -->
+<div class="sport-section" id="basketball">
+  <div class="container">
+
+    <div class="sport-hero-band sb-basketball">
+      <div class="shb-inner">
+        <span class="sport-emoji">🏀</span>
+        <h2 class="sport-name">BASKETBALL</h2>
+        <p class="sport-tagline">Invented in 13 days, played by over 450 million people worldwide.</p>
+        <p class="sport-intro">Basketball is a fast-paced team sport in which two teams of five players attempt to score points by shooting the ball through the opponent's elevated hoop. Created in 1891 by Dr. James Naismith, it has grown into a global phenomenon driven by the NBA.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players per side</span><span class="val">5 (active)</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">FIBA / NBA</span></div>
+        <div class="info-row"><span class="lbl">NBA game duration</span><span class="val">4 × 12-min quarters</span></div>
+        <div class="info-row"><span class="lbl">FIBA duration</span><span class="val">4 × 10-min quarters</span></div>
+        <div class="info-row"><span class="lbl">Court dimensions</span><span class="val">28 m × 15 m</span></div>
+        <div class="info-row"><span class="lbl">Basket height</span><span class="val">3.05 m (10 ft)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring System</h5>
+        <div class="info-row"><span class="lbl">Field goal (inside arc)</span><span class="val">2 points</span></div>
+        <div class="info-row"><span class="lbl">Three-pointer (beyond arc)</span><span class="val">3 points</span></div>
+        <div class="info-row"><span class="lbl">Free throw</span><span class="val">1 point</span></div>
+        <div class="info-row"><span class="lbl">Shot clock (NBA)</span><span class="val">24 seconds</span></div>
+        <div class="info-row"><span class="lbl">Shot clock (FIBA)</span><span class="val">24 seconds</span></div>
+        <div class="info-row"><span class="lbl">NBA record score</span><span class="val">186 pts (3 OTs, 1983)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Key Positions</h5>
+        <div class="info-row"><span class="lbl">Point Guard (PG)</span><span class="val">Playmaker, ball handler</span></div>
+        <div class="info-row"><span class="lbl">Shooting Guard (SG)</span><span class="val">Primary scorer</span></div>
+        <div class="info-row"><span class="lbl">Small Forward (SF)</span><span class="val">Versatile scorer/defender</span></div>
+        <div class="info-row"><span class="lbl">Power Forward (PF)</span><span class="val">Rebounds, interior play</span></div>
+        <div class="info-row"><span class="lbl">Center (C)</span><span class="val">Post play, rim protection</span></div>
+        <div class="info-row"><span class="lbl">Sixth Man</span><span class="val">Top bench player</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules</h5>
+      <ul>
+        <li><strong>Dribbling:</strong> A player must dribble (bounce the ball) while moving. Carrying the ball without dribbling is a violation (travelling).</li>
+        <li><strong>Personal fouls:</strong> Players foul out after 5 fouls (FIBA) or 6 fouls (NBA). Fouls lead to free throws if the team is in the bonus.</li>
+        <li><strong>Shot clock:</strong> Teams must attempt a shot within 24 seconds of gaining possession or possession is lost.</li>
+        <li><strong>3-second rule:</strong> An offensive player may not remain in the key (painted area) for more than 3 consecutive seconds.</li>
+        <li><strong>Backcourt violation:</strong> Once a team advances the ball past the half-court line, they may not retreat it below (8-second rule).</li>
+        <li><strong>Goaltending:</strong> Blocking or touching the ball on its downward arc toward the basket is illegal and the basket counts automatically.</li>
+        <li><strong>Technical foul:</strong> Called for unsportsmanlike conduct, arguing with referees, or certain violations; results in free throws for the opposing team.</li>
+        <li><strong>Overtime:</strong> If the score is tied at the end of regulation, 5-minute overtime periods are played until a winner is decided.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Basketball (size 7 men / 6 women)</span>
+      <span class="equip-tag">Basketball hoop + backboard</span>
+      <span class="equip-tag">Basketball shoes (high-top)</span>
+      <span class="equip-tag">Jersey and shorts</span>
+      <span class="equip-tag">Knee pads (optional)</span>
+      <span class="equip-tag">Mouthguard (optional)</span>
+      <span class="equip-tag">Shot clock system</span>
+      <span class="equip-tag">Scoreboard</span>
+    </div>
+
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Alley-oop</div><div class="def">A lob pass caught and dunked in one motion near the basket.</div></div>
+      <div class="term-item"><div class="term">Double-double</div><div class="def">Reaching double figures in two statistical categories (e.g., 10 pts + 10 reb).</div></div>
+      <div class="term-item"><div class="term">Pick and Roll</div><div class="def">A two-player play where one screens a defender while the other drives to the basket.</div></div>
+      <div class="term-item"><div class="term">Fast Break</div><div class="def">Quickly advancing the ball before the defense can set up.</div></div>
+      <div class="term-item"><div class="term">Buzzer Beater</div><div class="def">A shot made as or just before the game or quarter clock expires.</div></div>
+      <div class="term-item"><div class="term">Triple-double</div><div class="def">Reaching double digits in three categories in a single game.</div></div>
+      <div class="term-item"><div class="term">Zone Defense</div><div class="def">Defenders guard areas of the court rather than individual players.</div></div>
+      <div class="term-item"><div class="term">Posterize</div><div class="def">Dunking over a defending player dramatically.</div></div>
+    </div>
+
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>Invented in December 1891 by Dr. James Naismith in Springfield, Massachusetts, using a soccer ball and two peach baskets as goals.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The NBA was founded in 1946 (as the BAA) and today features 30 teams playing an 82-game regular season.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Michael Jordan's Chicago Bulls won six NBA championships between 1991 and 1998, making Jordan the most iconic basketball player in history.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>LeBron James became the NBA's all-time leading scorer in 2023, surpassing Kareem Abdul-Jabbar's long-standing record of 38,387 points.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Basketball was added to the Olympic Games in 1936 (Berlin) for men, and 1976 (Montreal) for women.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The three-point line was introduced to the NBA in the 1979–80 season, transforming offensive strategy over the following decades.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TENNIS ════════════════════════════════════════════ -->
+<div class="sport-section" id="tennis">
+  <div class="container">
+
+    <div class="sport-hero-band sb-tennis">
+      <div class="shb-inner">
+        <span class="sport-emoji">🎾</span>
+        <h2 class="sport-name">TENNIS</h2>
+        <p class="sport-tagline">One of the few sports where love means nothing — literally.</p>
+        <p class="sport-intro">Tennis is a racket sport played between two players (singles) or two teams of two (doubles) on a rectangular court divided by a net. Players use strung rackets to strike a rubber ball over the net, aiming to win points by landing the ball within bounds where opponents cannot return it.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players</span><span class="val">1 vs 1 or 2 vs 2</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">ITF / ATP / WTA</span></div>
+        <div class="info-row"><span class="lbl">Court types</span><span class="val">Hard, clay, grass, carpet</span></div>
+        <div class="info-row"><span class="lbl">Court dimensions</span><span class="val">23.77 m × 8.23 m (singles)</span></div>
+        <div class="info-row"><span class="lbl">Net height (centre)</span><span class="val">91.4 cm</span></div>
+        <div class="info-row"><span class="lbl">Ball weight</span><span class="val">56–59.4 g</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring System</h5>
+        <div class="info-row"><span class="lbl">Points within a game</span><span class="val">Love → 15 → 30 → 40 → Game</span></div>
+        <div class="info-row"><span class="lbl">Deuce</span><span class="val">40-40 (need 2-point lead)</span></div>
+        <div class="info-row"><span class="lbl">Games to win a set</span><span class="val">6 (must lead by 2)</span></div>
+        <div class="info-row"><span class="lbl">Tiebreak at 6-6</span><span class="val">First to 7 points (lead by 2)</span></div>
+        <div class="info-row"><span class="lbl">Sets to win match</span><span class="val">Best of 3 or best of 5</span></div>
+        <div class="info-row"><span class="lbl">Grand Slam format</span><span class="val">Best of 5 (men); 3 (women)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>The Grand Slams</h5>
+        <div class="info-row"><span class="lbl">Australian Open</span><span class="val">Hard court · January</span></div>
+        <div class="info-row"><span class="lbl">Roland Garros (French Open)</span><span class="val">Clay · May–June</span></div>
+        <div class="info-row"><span class="lbl">Wimbledon</span><span class="val">Grass · June–July</span></div>
+        <div class="info-row"><span class="lbl">US Open</span><span class="val">Hard court · Aug–Sep</span></div>
+        <div class="info-row"><span class="lbl">Most men's Slam titles</span><span class="val">Djokovic — 24</span></div>
+        <div class="info-row"><span class="lbl">Most women's Slam titles</span><span class="val">Serena Williams — 23</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules</h5>
+      <ul>
+        <li><strong>Serve:</strong> The server has two attempts per point. A first serve fault means a second serve; a double fault loses the point.</li>
+        <li><strong>In/Out:</strong> The ball must land within the opponent's court lines (including on the line) to be in play. Balls must bounce only once before being returned.</li>
+        <li><strong>Let:</strong> If the serve clips the net and lands in the correct service box, a let is called and the serve is retaken without penalty.</li>
+        <li><strong>Foot fault:</strong> A server may not step on or over the baseline before striking the ball.</li>
+        <li><strong>Tiebreak:</strong> At 6-6 in most sets, a 7-point tiebreak (first to 7, win by 2) determines the set winner. In Grand Slam final sets, formats vary.</li>
+        <li><strong>Match tiebreak:</strong> In doubles and some competitions, a 10-point super tiebreak replaces a final set.</li>
+        <li><strong>Hawkeye (challenge system):</strong> Players may challenge line calls using video tracking technology. Each player typically gets 3 incorrect challenges per set.</li>
+        <li><strong>Code violations:</strong> Unsportsmanlike conduct such as racket abuse or audible obscenity results in point, game, or set penalties.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Tennis racket</span>
+      <span class="equip-tag">Tennis balls (pressurised)</span>
+      <span class="equip-tag">Tennis shoes (court-specific)</span>
+      <span class="equip-tag">Tennis whites / sportswear</span>
+      <span class="equip-tag">Net + posts</span>
+      <span class="equip-tag">Sweat bands / wristbands</span>
+      <span class="equip-tag">Ball machine (practice)</span>
+    </div>
+
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Ace</div><div class="def">A serve that the receiver cannot touch, winning the point outright.</div></div>
+      <div class="term-item"><div class="term">Bagel</div><div class="def">Winning a set 6–0, giving the opponent a "zero" shaped score.</div></div>
+      <div class="term-item"><div class="term">Breadstick</div><div class="def">Winning a set 6–1.</div></div>
+      <div class="term-item"><div class="term">Drop shot</div><div class="def">A delicate shot that just clears the net and barely bounces.</div></div>
+      <div class="term-item"><div class="term">Lob</div><div class="def">A shot hit high and deep to send the opponent back from the net.</div></div>
+      <div class="term-item"><div class="term">Slice</div><div class="def">A shot hit with backspin, making the ball stay low after bouncing.</div></div>
+      <div class="term-item"><div class="term">Volley</div><div class="def">Hitting the ball before it bounces, usually near the net.</div></div>
+      <div class="term-item"><div class="term">Grand Slam</div><div class="def">Winning all four major tournaments in a single calendar year.</div></div>
+    </div>
+
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>Modern lawn tennis was invented by Major Walter Clopton Wingfield in 1873 in Wales and quickly became popular among British upper classes.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Wimbledon, first played in 1877, is the oldest and most prestigious Grand Slam tournament in the world.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The Open Era began in 1968 when Grand Slam events were opened to professional players alongside amateurs.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The rivalry between Roger Federer, Rafael Nadal, and Novak Djokovic — known as the "Big Three" — defined tennis for over two decades.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Serena Williams won 23 Grand Slam titles across a career spanning 1999 to 2022, making her the most decorated player in the Open Era.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Tennis is one of only five sports to have been part of every modern Summer Olympics since 1896 (with a gap from 1928–1984).</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ BADMINTON ══════════════════════════════════════════ -->
+<div class="sport-section" id="badminton">
+  <div class="container">
+
+    <div class="sport-hero-band sb-badminton">
+      <div class="shb-inner">
+        <span class="sport-emoji">🏸</span>
+        <h2 class="sport-name">BADMINTON</h2>
+        <p class="sport-tagline">The fastest racket sport on Earth — shuttlecocks exceeding 493 km/h.</p>
+        <p class="sport-intro">Badminton is a racket sport played using a shuttlecock (birdie) across a high net. It can be played as singles (1v1), doubles (2v2), or mixed doubles. Despite its casual reputation in many Western countries, badminton is an intensely athletic professional sport, especially popular in East and Southeast Asia.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players</span><span class="val">1 or 2 per side</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">BWF (Badminton World Federation)</span></div>
+        <div class="info-row"><span class="lbl">Match format</span><span class="val">Best of 3 games</span></div>
+        <div class="info-row"><span class="lbl">Court dimensions</span><span class="val">13.4 m × 6.1 m (doubles)</span></div>
+        <div class="info-row"><span class="lbl">Net height (centre)</span><span class="val">1.524 m</span></div>
+        <div class="info-row"><span class="lbl">Shuttlecock weight</span><span class="val">4.74–5.50 g</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring System</h5>
+        <div class="info-row"><span class="lbl">Points per game</span><span class="val">21 (rally scoring)</span></div>
+        <div class="info-row"><span class="lbl">Winning margin</span><span class="val">Must lead by 2</span></div>
+        <div class="info-row"><span class="lbl">Setting (20-20)</span><span class="val">First to 30 wins</span></div>
+        <div class="info-row"><span class="lbl">Service rules</span><span class="val">Diagonal, below waist</span></div>
+        <div class="info-row"><span class="lbl">Rally scoring</span><span class="val">Every rally = 1 point</span></div>
+        <div class="info-row"><span class="lbl">Olympic since</span><span class="val">1992 (Barcelona)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Playing Styles</h5>
+        <div class="info-row"><span class="lbl">Attacking style</span><span class="val">Smash-dominated play</span></div>
+        <div class="info-row"><span class="lbl">Defensive style</span><span class="val">Retrieving, counter-play</span></div>
+        <div class="info-row"><span class="lbl">Deceptive play</span><span class="val">Net drops + fake shots</span></div>
+        <div class="info-row"><span class="lbl">Physical demands</span><span class="val">High speed, agility, stamina</span></div>
+        <div class="info-row"><span class="lbl">Top nations</span><span class="val">China, Indonesia, Denmark</span></div>
+        <div class="info-row"><span class="lbl">Indoors required</span><span class="val">Yes — wind affects shuttle</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules</h5>
+      <ul>
+        <li><strong>Service:</strong> The serve must be made diagonally, with the shuttle and racket head below the server's waist. Service must be a continuous forward movement.</li>
+        <li><strong>Rally scoring:</strong> A point is scored on every rally, regardless of who serves. The server changes when the receiving side wins a rally.</li>
+        <li><strong>Faults:</strong> A fault occurs if the shuttle lands outside the court, passes through or under the net, is hit twice, or if a player touches the net.</li>
+        <li><strong>Service courts:</strong> In singles, the long narrow lines are used; in doubles, the short wide lines are used, creating different court shapes for each format.</li>
+        <li><strong>Let:</strong> A let is called if the shuttle catches the net on a serve and still lands in the correct service court, among other stoppage situations.</li>
+        <li><strong>Interval and change of ends:</strong> Players change ends at the end of each game and in the third game when one player reaches 11 points.</li>
+        <li><strong>Continuous play:</strong> Play must be continuous; coaching from the sideline is not permitted during rallies.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Badminton racket (lightweight)</span>
+      <span class="equip-tag">Shuttlecock (feather or synthetic)</span>
+      <span class="equip-tag">Badminton shoes (non-marking)</span>
+      <span class="equip-tag">Sports clothing</span>
+      <span class="equip-tag">Net + poles</span>
+      <span class="equip-tag">Grip tape</span>
+      <span class="equip-tag">Racket bag</span>
+    </div>
+
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Smash</div><div class="def">A powerful downward shot hit at full power — the primary attacking weapon.</div></div>
+      <div class="term-item"><div class="term">Drop shot</div><div class="def">A gentle shot that just clears the net and falls steeply into the opponent's front court.</div></div>
+      <div class="term-item"><div class="term">Clear</div><div class="def">A shot hit high and deep to the back of the opponent's court.</div></div>
+      <div class="term-item"><div class="term">Net kill</div><div class="def">Aggressively hitting a shuttle that is above the net tape at close range.</div></div>
+      <div class="term-item"><div class="term">Drive</div><div class="def">A flat, fast shot hit parallel to the ground, usually from the mid-court.</div></div>
+      <div class="term-item"><div class="term">Lift</div><div class="def">Hitting the shuttle from the front court high and deep to the back.</div></div>
+      <div class="term-item"><div class="term">Deception</div><div class="def">Disguising shot direction by delaying the wrist action at the last moment.</div></div>
+      <div class="term-item"><div class="term">Service fault</div><div class="def">An illegal serve — too high, wrong direction, or not below the waist.</div></div>
+    </div>
+
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>The game derives from "battledore and shuttlecock," played in ancient Greece, China, Japan, and India thousands of years ago.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Modern badminton takes its name from Badminton House in Gloucestershire, England, where British Army officers played an early version of the game around 1873.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The Badminton World Federation (BWF) was founded in 1934 with just 9 member countries; today it has over 195 members.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>China's Lin Dan is widely regarded as the greatest badminton player ever, winning the "Super Grand Slam" — all nine major titles.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The fastest recorded smash was by Tan Boon Heong of Malaysia at 493 km/h, making badminton the fastest racket sport in the world.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Indonesia has won the Thomas Cup (men's team championship) 14 times, more than any other nation.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ HOCKEY ════════════════════════════════════════════ -->
+<div class="sport-section" id="hockey">
+  <div class="container">
+
+    <div class="sport-hero-band sb-hockey">
+      <div class="shb-inner">
+        <span class="sport-emoji">🏑</span>
+        <h2 class="sport-name">FIELD HOCKEY</h2>
+        <p class="sport-tagline">Speed, skill, and a stick — one of the oldest team sports on Earth.</p>
+        <p class="sport-intro">Field hockey is a team sport played on grass, artificial turf, or indoor courts. Two teams of eleven players each use curved sticks to hit, push, or slap a hard ball into the opponent's goal. It is one of the oldest sports and among the most-played team sports globally after football and cricket.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Quick <span>Facts</span></h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h5>At a Glance</h5>
+        <div class="info-row"><span class="lbl">Players per side</span><span class="val">11</span></div>
+        <div class="info-row"><span class="lbl">Governing body</span><span class="val">FIH (International Hockey Federation)</span></div>
+        <div class="info-row"><span class="lbl">Match duration</span><span class="val">4 × 15-minute quarters</span></div>
+        <div class="info-row"><span class="lbl">Field dimensions</span><span class="val">91.4 m × 55 m</span></div>
+        <div class="info-row"><span class="lbl">Ball weight</span><span class="val">156–163 g</span></div>
+        <div class="info-row"><span class="lbl">Olympic since</span><span class="val">1908 (London)</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Scoring & Winning</h5>
+        <div class="info-row"><span class="lbl">Goal from open play</span><span class="val">1 point</span></div>
+        <div class="info-row"><span class="lbl">Goals must be scored from</span><span class="val">Inside the shooting circle</span></div>
+        <div class="info-row"><span class="lbl">Penalty stroke</span><span class="val">One-on-one vs. goalkeeper</span></div>
+        <div class="info-row"><span class="lbl">Penalty corner</span><span class="val">Set piece from top of circle</span></div>
+        <div class="info-row"><span class="lbl">Tied games (knockouts)</span><span class="val">Penalty shootout</span></div>
+        <div class="info-row"><span class="lbl">Most Olympic golds</span><span class="val">India (men) — 8 titles</span></div>
+      </div>
+      <div class="info-card">
+        <h5>Key Positions</h5>
+        <div class="info-row"><span class="lbl">Goalkeeper</span><span class="val">Defends goal, uses pads</span></div>
+        <div class="info-row"><span class="lbl">Fullbacks (2)</span><span class="val">Wide defenders</span></div>
+        <div class="info-row"><span class="lbl">Centre back</span><span class="val">Central defensive anchor</span></div>
+        <div class="info-row"><span class="lbl">Halfbacks (3)</span><span class="val">Link defence and attack</span></div>
+        <div class="info-row"><span class="lbl">Insides / Forwards (3)</span><span class="val">Creative attackers</span></div>
+        <div class="info-row"><span class="lbl">Centre forward</span><span class="val">Primary scorer</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Rules & How <span>It's Played</span></h3>
+    <div class="rules-card">
+      <h5>Core Rules</h5>
+      <ul>
+        <li><strong>Scoring:</strong> Goals can only be scored from within the striking circle (D-shaped zone 14.63 m from goal). A shot from outside the circle does not count even if it enters the goal.</li>
+        <li><strong>Stick use:</strong> Only the flat face of the stick may be used to play the ball. The round back of the stick is illegal; using it is called a "back-stick" foul.</li>
+        <li><strong>Obstruction:</strong> Players may not use their body or stick to obstruct an opponent from playing the ball. This is one of the most commonly called fouls.</li>
+        <li><strong>Penalty corner:</strong> Awarded for fouls committed inside the defensive circle or intentional fouls within the 23m area. The ball is pushed from a spot on the goal line.</li>
+        <li><strong>Penalty stroke:</strong> Awarded for deliberate fouls inside the circle or when a goal is denied by a foul. Taken one-on-one against the goalkeeper from 7 meters.</li>
+        <li><strong>Green card:</strong> A warning for minor offences. The player is suspended for 2 minutes. Yellow cards result in temporary 5-minute suspensions; red cards are permanent ejections.</li>
+        <li><strong>Aerial ball:</strong> Players may lift the ball using a flick, but only if it is safe and not dangerous to opponents.</li>
+        <li><strong>Self-pass:</strong> At free hits outside the circle, the player taking the hit may immediately play the ball themselves without waiting for a teammate to touch it first.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub-heading">Equipment <span>Needed</span></h3>
+    <div class="equip-list">
+      <span class="equip-tag">Hockey stick (composite/wood)</span>
+      <span class="equip-tag">Hard hollow ball (white)</span>
+      <span class="equip-tag">Shin guards</span>
+      <span class="equip-tag">Mouthguard</span>
+      <span class="equip-tag">Goalkeeping helmet + face mask</span>
+      <span class="equip-tag">GK chest & body padding</span>
+      <span class="equip-tag">GK kickers + leg guards</span>
+      <span class="equip-tag">Hockey shoes / turf trainers</span>
+      <span class="equip-tag">Gloves (optional)</span>
+    </div>
+
+    <h3 class="sub-heading">Key <span>Terminology</span></h3>
+    <div class="term-grid">
+      <div class="term-item"><div class="term">Penalty Corner</div><div class="def">A set piece awarded inside the circle. Ball is pushed from the goal line for an attacking opportunity.</div></div>
+      <div class="term-item"><div class="term">Dragflick</div><div class="def">A powerful and accurate shot technique used to score from penalty corners.</div></div>
+      <div class="term-item"><div class="term">Dribbling</div><div class="def">Controlling and moving the ball with quick stick movements while running.</div></div>
+      <div class="term-item"><div class="term">Jink</div><div class="def">A quick change of direction with the ball to beat a defender.</div></div>
+      <div class="term-item"><div class="term">Aerial</div><div class="def">Lifting the ball high into the air to clear defenders or make long passes.</div></div>
+      <div class="term-item"><div class="term">Bully</div><div class="def">A restart method where two players alternate tapping the ground and each other's sticks before contesting the ball.</div></div>
+      <div class="term-item"><div class="term">Indian Dribble</div><div class="def">A rapid side-to-side movement style pioneered by Indian and Pakistani players.</div></div>
+      <div class="term-item"><div class="term">Shooting circle</div><div class="def">The D-shaped zone in front of each goal — only shots from within count.</div></div>
+    </div>
+
+    <div class="history-band">
+      <h5>🕰 History & Key Facts</h5>
+      <div class="fact-grid">
+        <div class="fact-item"><div class="fact-bullet"></div><p>Forms of field hockey have been played for over 4,000 years — wall paintings from ancient Egypt show people playing with curved sticks and a ball.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Modern field hockey was codified in England in the 1850s–1870s, with the first Hockey Association formed in London in 1886.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>India dominated Olympic field hockey from 1928 to 1956, winning six consecutive gold medals and remaining unbeaten for over two decades.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The FIH Hockey World Cup, first held in 1971 for men, is the sport's premier international competition, held every four years.</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>Pakistan holds the record for the most Hockey World Cup wins with 4 titles (1971, 1978, 1982, 1994).</p></div>
+        <div class="fact-item"><div class="fact-bullet"></div><p>The transition from natural grass to artificial turf (AstroTurf) in the 1970s fundamentally changed the game, increasing pace and passing accuracy.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ COMPARISON TABLE ═══════════════════════════════════ -->
+<section class="compare" id="compare">
+  <div class="container">
+    <div class="text-center">
+      <span class="sec-label">Side by Side</span>
+      <h2 class="sec-title">SPORT COMPARISON</h2>
+      <div class="divider center"></div>
+      <p class="sec-sub" style="margin:0 auto">A quick reference guide comparing all six sports covered in this guide.</p>
+    </div>
+    <div class="tbl-wrap" style="margin-top:2.5rem">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Sport</th>
+            <th>Team Size</th>
+            <th>Duration</th>
+            <th>Scoring Unit</th>
+            <th>Key Governing Body</th>
+            <th>Olympic?</th>
+            <th>Played Indoors?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🏏 Cricket</td>
+            <td>11 per side</td>
+            <td>T20: 3 hrs · ODI: 8 hrs · Test: 5 days</td>
+            <td>Runs</td>
+            <td>ICC</td>
+            <td>No (T20 in 2028 Paris)</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>⚽ Football</td>
+            <td>11 per side</td>
+            <td>90 min (+ extra time)</td>
+            <td>Goals</td>
+            <td>FIFA</td>
+            <td>Yes (since 1900)</td>
+            <td>Futsal variant</td>
+          </tr>
+          <tr>
+            <td>🏀 Basketball</td>
+            <td>5 per side</td>
+            <td>40 min (FIBA) / 48 min (NBA)</td>
+            <td>Points (1/2/3)</td>
+            <td>FIBA / NBA</td>
+            <td>Yes (since 1936)</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>🎾 Tennis</td>
+            <td>1 or 2 per side</td>
+            <td>1–5 hours (varies)</td>
+            <td>Points → Games → Sets</td>
+            <td>ITF</td>
+            <td>Yes (since 1896)</td>
+            <td>Both</td>
+          </tr>
+          <tr>
+            <td>🏸 Badminton</td>
+            <td>1 or 2 per side</td>
+            <td>30–90 minutes</td>
+            <td>Points (rally scoring)</td>
+            <td>BWF</td>
+            <td>Yes (since 1992)</td>
+            <td>Yes (required)</td>
+          </tr>
+          <tr>
+            <td>🏑 Field Hockey</td>
+            <td>11 per side</td>
+            <td>60 min (4×15 quarters)</td>
+            <td>Goals</td>
+            <td>FIH</td>
+            <td>Yes (since 1908)</td>
+            <td>Indoor variant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">SPORTS<span>INFO</span></div>
+        <p style="color:var(--muted);font-size:.88rem;line-height:1.7;margin-top:.5rem">A comprehensive educational sports guide by Infocom Digital. Informing fans, students, and athletes worldwide.</p>
+      </div>
+      <div class="foot-col">
+        <h6>Sports Covered</h6>
+        <div class="foot-links">
+          <a onclick="showSport('cricket')">🏏 Cricket</a>
+          <a onclick="showSport('football')">⚽ Football</a>
+          <a onclick="showSport('basketball')">🏀 Basketball</a>
+          <a onclick="showSport('tennis')">🎾 Tennis</a>
+          <a onclick="showSport('badminton')">🏸 Badminton</a>
+          <a onclick="showSport('hockey')">🏑 Field Hockey</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h6>Quick Reference</h6>
+        <div class="foot-links">
+          <a href="#overview">What Are Sports?</a>
+          <a href="#compare">Compare All Sports</a>
+          <a href="#cricket">Cricket Rules</a>
+          <a href="#football">Football Laws</a>
+          <a href="#basketball">Basketball Rules</a>
+          <a href="#tennis">Tennis Scoring</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h6>About This Guide</h6>
+        <p style="color:var(--muted);font-size:.85rem;line-height:1.7">This page is an educational resource designed to give readers a comprehensive understanding of major world sports — from basic rules to history and terminology.</p>
+        <p style="color:var(--muted);font-size:.82rem;margin-top:.8rem">Information is accurate as of 2025. Rules subject to updates by governing bodies.</p>
+      </div>
+    </div>
+    <p class="foot-copy">© 2025 SportsInfo — Infocom Digital. All rights reserved. Educational use.</p>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+// ── Mobile nav ──────────────────────────────────────
+const hbg = document.getElementById('hbg');
+const mobNav = document.getElementById('mob-nav');
+hbg.addEventListener('click', () => {
+  const open = mobNav.classList.toggle('open');
+  const spans = hbg.querySelectorAll('span');
+  spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+  spans[1].style.opacity   = open ? '0' : '1';
+  spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+});
+function closeMob() { mobNav.classList.remove('open'); }
+
+// ── Tab switching ────────────────────────────────────
+function showSport(id) {
+  document.querySelectorAll('.sport-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  const section = document.getElementById(id);
+  if (section) {
+    section.classList.add('active');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.s-tab').forEach(t => {
+    if (t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+  });
+}
+
+// ── Back to top ─────────────────────────────────────
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('show', window.scrollY > 400);
+});
+
+// ── Highlight nav tab on scroll ──────────────────────
+const sportIds = ['cricket','football','basketball','tennis','badminton','hockey'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio > 0.3) {
+      const id = e.target.id;
+      document.querySelectorAll('.s-tab').forEach(t => {
+        t.classList.toggle('active', t.getAttribute('onclick').includes("'" + id + "'"));
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sportIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
